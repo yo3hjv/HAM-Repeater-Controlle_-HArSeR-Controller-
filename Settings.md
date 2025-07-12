@@ -25,16 +25,29 @@ This document explains how each setting in the ESP32 Repeater Controller web int
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
 | RSSI High Threshold | Sets the RSSI level to trigger reception | Higher values require stronger signals to activate the repeater, reducing sensitivity but improving noise rejection. |
-| RSSI Hysteresis | Sets the difference between activation and deactivation thresholds | Larger values prevent signal flutter at threshold boundaries by requiring a greater signal drop before deactivation. |
-| RSSI Readings | Number of consecutive readings required | Higher values improve stability but increase response time. Helps filter out brief noise spikes. |
+| RSSI Low Threshold | Sets the difference between activation and deactivation thresholds | Lower values prevent signal flutter at threshold boundaries but require carefull evaluation of the noise floor. |
+| RSSI Readings | Number of consecutive readings required | Higher values improve stability but increase response time. Averaging the signal level from multiple readings. |
 
 ## Time Hysteresis
 
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
 | Anti-Kerchunking Timer | Minimum time (ms) a signal must be present | Prevents brief transmissions ("kerchunks") from activating the repeater. Higher values filter out more short transmissions. |
-| Hold Time | Time (ms) to maintain carrier detection after signal drops | Prevents brief signal dropouts from deactivating carrier detection. Part of the input signal validation process. |
+| Hold Time | Time (ms) if the signal came back in this interval it is considered continuous | Prevents brief signal dropouts from deactivating carrier detection. Part of the input signal validation process. |
 | Fragmentation Time | Time (ms) to wait after signal drops before starting courtesy tone | Handles brief interruptions in the incoming signal after the repeater is already active. Prevents the repeater from immediately starting the end-of-transmission sequence when there's a very short gap. |
+
+### Understanding Hold Time vs. Fragmentation Time
+
+**Fragmentation Time:** Handles brief interruptions in the incoming signal after the repeater is already active. It prevents the repeater from immediately starting the end-of-transmission sequence when there's a very short gap in the incoming signal.
+
+**Hold Time:** Determines how long the repeater waits after the input signal disappears before deactivating the carrier detection. It's part of the input signal validation.
+
+#### When They Apply:
+
+* **Fragmentation Time** applies when the repeater is already transmitting and the input signal briefly drops. It's part of the transmission ending sequence.
+* **Hold Time** applies during the signal detection phase, before deciding if the repeater should stop responding to an input signal. It's part of the input signal hysteresis.
+
+**In summary**, while both timers deal with brief interruptions in signals, **Hold Time** affects when the repeater stops detecting an input signal, while **Fragmentation Time** affects when the repeater starts its end-of-transmission sequence after the input signal has already been lost.
 
 ## Repeater Timeouts
 
