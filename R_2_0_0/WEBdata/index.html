@@ -1,0 +1,82 @@
+<div class="main-content">
+  <h2 class="lang-homepage-title">Repeater Status</h2>
+  
+  <div class="card">
+    <div class="card-header lang-repeater-status">Repeater Status</div>
+    <div class="card-body">
+      <div class="status-item">
+        <span class="lang-repeater-state">Repeater State:</span>
+        <span class="status-value">
+          <span class="status-indicator status-active" id="repeater-state-indicator"></span>
+          <span class="lang-active" id="repeater-state">{REPEATER_STATE}</span>
+        </span>
+      </div>
+      <div class="status-item">
+        <span class="lang-rssi-level">RSSI Level:</span>
+        <span class="status-value" id="rssi-value">{RSSI_VALUE}</span>
+      </div>
+      <div class="status-item">
+        <span class="lang-carrier-detect">Carrier Detect:</span>
+        <span class="status-value">
+          <span class="status-indicator status-inactive" id="carrier-indicator"></span>
+          <span class="lang-inactive" id="carrier-status">Inactive</span>
+        </span>
+      </div>
+      <div class="status-item">
+        <span class="lang-ptt-status">PTT Status:</span>
+        <span class="status-value">
+          <span class="status-indicator status-inactive" id="ptt-indicator"></span>
+          <span class="lang-inactive" id="ptt-status">Inactive</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header lang-operational-status">Operational Status</div>
+    <div class="card-body">
+      <div class="status-item">
+        <span class="lang-current-mode">Current Mode:</span>
+        <span class="status-value" id="current-mode">{CURRENT_MODE}</span>
+      </div>
+      <!-- Operation State removed as it is redundant -->
+      <div class="status-item">
+        <span class="lang-tot-status">Time-out Timer:</span>
+        <span class="status-value">
+          <span class="status-indicator" id="tot-indicator"></span>
+          <span id="tot-status-text" class="lang-normal">Normal</span>
+          <span id="tot-time" class="small-text"></span>
+        </span>
+      </div>
+      <div class="status-item">
+        <span class="lang-courtesy-state">Courtesy Tone:</span>
+        <span class="status-value">
+          <span class="status-indicator" id="courtesy-indicator"></span>
+          <span id="courtesy-state-text">Enabled</span>
+        </span>
+      </div>
+      <div class="status-item">
+        <span class="lang-tail-state">Tail Tone:</span>
+        <span class="status-value">
+          <span class="status-indicator" id="tail-indicator"></span>
+          <span id="tail-state-text">Enabled</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card">
+    <div class="card-header lang-beacon-info">Beacon Information</div>
+    <div class="card-body">
+      <div class="status-item">
+        <span class="lang-beacon-message">Beacon Message:</span>
+        <span class="status-value" id="beacon-message">{BEACON_MESSAGE}</span>
+      </div>
+      <div class="status-item">
+        <span class="lang-beacon-interval">Beacon Interval:</span>
+        <span class="status-value" id="beacon-interval-formatted">00:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/index.js"></script>

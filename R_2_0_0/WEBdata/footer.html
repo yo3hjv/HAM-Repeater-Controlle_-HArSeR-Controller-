@@ -1,0 +1,71 @@
+  </div><!-- End of main-content -->
+  <div class="footer">
+    <div class="footer-nav">
+      <a href="/" class="footer-link lang-home">Home</a>
+      <a href="/settings" class="footer-link lang-settings">Settings</a>
+      <a href="/about" class="footer-link lang-about">About</a>
+    </div>
+    <div class="beacon-section">
+      <a href="#" onclick="sendBeacon(); return false;" class="beacon-link lang-send-beacon">Send Beacon</a>
+      <div id="beacon-status" class="beacon-status" style="display: none;"></div>
+    </div>
+    <div class="copyright">
+      <a href="mailto:yo3hjv@gmail.com">Copyright 2025 - Adrian YO3HJV, a humble trace on The Earth</a>
+    </div>
+  </div>
+  
+  <script>
+    function sendBeacon() {
+      console.log('Sending beacon...');
+      // Show a loading indicator
+      const beaconStatus = document.getElementById('beacon-status');
+      beaconStatus.className = 'beacon-status info';
+      beaconStatus.style.display = 'block';
+      // Use translateText function for translation if available
+      if (typeof translateText === 'function') {
+        beaconStatus.textContent = translateText('sending-beacon', 'Sending beacon...');
+      } else {
+        beaconStatus.textContent = 'Sending beacon...';
+      }
+      
+      // Use fetch to call the sendbeacon endpoint without redirecting
+      fetch('/sendbeacon', {
+        method: 'GET',
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      })
+      .then(response => {
+        console.log('Beacon triggered successfully');
+        // Show success message
+        beaconStatus.className = 'beacon-status success';
+        // Use translateText function for translation if available
+        if (typeof translateText === 'function') {
+          beaconStatus.textContent = translateText('beacon-sent', 'Beacon sent successfully!');
+        } else {
+          beaconStatus.textContent = 'Beacon sent successfully!';
+        }
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+          beaconStatus.style.display = 'none';
+        }, 3000);
+      })
+      .catch(error => {
+        console.error('Error sending beacon:', error);
+        // Show error message
+        beaconStatus.className = 'beacon-status error';
+        // Use translateText function for translation if available
+        if (typeof translateText === 'function') {
+          beaconStatus.textContent = translateText('beacon-error', 'Error sending beacon');
+        } else {
+          beaconStatus.textContent = 'Error sending beacon';
+        }
+        // Hide the message after 3 seconds
+        setTimeout(() => {
+          beaconStatus.style.display = 'none';
+        }, 3000);
+      });
+    }
+  </script>
+</body>
+</html>
