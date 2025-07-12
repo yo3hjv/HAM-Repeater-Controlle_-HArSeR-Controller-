@@ -53,26 +53,26 @@ This document explains how each setting in the ESP32 Repeater Controller web int
 
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
-| Hang Time (Tail Time) | Time (seconds) the repeater continues transmitting after signal ends | Controls how long the repeater continues to transmit after the incoming signal has ended and the courtesy tone has played. Gives users time to respond before the repeater shuts down. |
-| Time-out Timer | Maximum transmission time (seconds) | Prevents a single user from occupying the repeater indefinitely. When reached, the repeater stops transmitting until the input signal drops. |
-| Time-out Penalty | Additional wait time (seconds) after a timeout | Forces users who trigger the timeout to wait before using the repeater again. Discourages excessive long transmissions. |
+| Hang Time (Tail Time) | Time (seconds) the repeater continues transmitting after received signal ends | Controls how long the repeater continues to transmit after the incoming signal has ended and the courtesy tone has played. Gives users time to respond before the repeater shuts down. |
+| Time-out Timer | Maximum transmission time (seconds) | Prevents intense QSO from occupying the repeater indefinitely. When reached, the repeater stops transmitting until the input signal drops. |
+| Time-out Penalty | Additional wait time (seconds) after a timeout | Enforces the usersto wait this interval before keying the repeater again. Discourages excessive long transmissions. |
 
 ## Courtesy Tone Settings
 
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
 | Enable Courtesy Tone | Turns the courtesy tone on/off | When enabled, plays a tone after each transmission to signal that the repeater is ready for the next transmission. |
-| Courtesy Tone Frequency | Sets the tone frequency (Hz) | Determines the pitch of the courtesy tone. Typically between 500-2000 Hz. |
-| Courtesy Tone Duration | Sets the tone duration (ms) | Determines how long the courtesy tone plays. Longer durations are more noticeable but may be annoying. |
+| Courtesy Tone Frequency | Sets the tone frequency (Hz) | Determines the pitch of the courtesy tone. Typically between 1200-2300 Hz. |
+| Courtesy Tone Duration | Sets the tone duration (ms) | Determines how long the courtesy tone plays. Longer durations are more noticeable but may be annoying. Shorter, around 40 msec are more pleasant |
 | Pre-Time Courtesy | Delay (ms) before playing courtesy tone | Sets how long to wait after detecting the end of transmission before playing the courtesy tone. |
-| Courtesy Interval | Time (ms) between courtesy tones | Controls the spacing between repeated courtesy tones if multiple are configured. |
+
 
 ## Tail Tone Settings
 
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
 | Enable Tail Tone | Turns the tail tone on/off | When enabled, plays a tone at the end of the repeater's transmission cycle. Signals the end of the repeater's hang time. |
-| Tail Tone Frequency | Sets the tone frequency (Hz) | Determines the pitch of the tail tone. Typically between 500-2000 Hz. |
+| Tail Tone Frequency | Sets the tone frequency (Hz) | Determines the pitch of the tail tone. Typically between 500-1000 Hz. |
 | Tail Tone Duration | Sets the tone duration (ms) | Determines how long the tail tone plays. |
 | Pre-Time Tail | Delay (ms) before playing tail tone | Sets how long to wait before playing the tail tone at the end of transmission. |
 
@@ -84,20 +84,20 @@ This document explains how each setting in the ESP32 Repeater Controller web int
 | Beacon Interval | Time (minutes) between beacon transmissions | Controls how frequently the repeater sends its identification beacon. Longer intervals reduce beacon frequency. |
 | CW Speed | Sets the Morse code speed (WPM) | Determines how fast the beacon message is sent. Higher values make the beacon shorter but potentially harder to copy. |
 | CW Tone | Sets the Morse code tone frequency (Hz) | Determines the pitch of the beacon tone. Typically between 500-1000 Hz. |
-| Beacon Delay Dots | Number of dots to delay between callsign and end message | Controls the spacing between the callsign and the end message in the beacon. |
-| Beacon End Message (Active) | Message sent after callsign when repeater is active | Customizes the second part of the beacon when the repeater is operating normally. |
-| Beacon End Message (Locked) | Message sent after callsign when repeater is locked | Customizes the second part of the beacon when the repeater is in locked mode. |
+| Delay between Callsign and End message | Number of dots to delay between callsign and end message | Controls the spacing between the callsign and the end message in the beacon. |
+| Active Repeater End Message | Message sent after callsign when repeater is active | Customizes the second part of the beacon when the repeater is operating normally. "QRV" or "K" |
+| Locked Repeater End Message | Message sent after callsign when repeater is locked | Customizes the second part of the beacon when the repeater is in locked mode. "QSK" or "SK"|
 
 ## Understanding Timing Parameters
 
 ### Signal Detection and Validation
 1. **Input Signal** → **RSSI/Carrier Detection** → **Hold Time** → **Anti-Kerchunking Timer**
-   - Signal must exceed RSSI threshold or trigger carrier detect
+   - Signal must exceed RSSI High Threshold or trigger Logical Carrier detect
    - Signal must remain present for Anti-Kerchunking Timer duration
    - Brief dropouts shorter than Hold Time are ignored
 
 ### During Active Transmission
-1. **Repeater Active** → **Signal Drops** → **Fragmentation Time** → **Courtesy Tone** → **Hang Time** → **Tail Tone**
+1. **Repeater Active** → **Signal Drops** → **Hold Time** → **Fragmentation Time** → **Courtesy Tone** → **Hang Time** → **Tail Tone**
    - If signal returns within Fragmentation Time, transmission continues uninterrupted
    - If signal doesn't return, courtesy tone plays after Pre-Time Courtesy delay
    - Repeater continues transmitting for Hang Time duration
@@ -113,18 +113,19 @@ This document explains how each setting in the ESP32 Repeater Controller web int
 
 ## Best Practices
 
-1. **Anti-Kerchunking Timer**: Set between 100-500ms. Lower values are more responsive but may allow unintentional activations.
+1. **Anti-Kerchunking Timer**: Set between 100-250ms. Lower values are more responsive but may allow unintentional activations.
 2. **Hold Time**: Typically 100-200ms. Should be shorter than Fragmentation Time.
-3. **Fragmentation Time**: Usually 200-500ms. Should be longer than Hold Time but short enough to not delay the courtesy tone noticeably.
-4. **Hang Time**: 2-5 seconds is common. Longer times give more opportunity for break-in but keep the repeater transmitting longer.
-5. **Time-out Timer**: 3-5 minutes is standard. Adjust based on your community's typical conversation patterns.
-6. **RSSI Settings**: Start with conservative values and adjust based on real-world performance and noise conditions.
+3. **Fragmentation Time**: Usually 300-600ms. Should be longer than Hold Time but short enough to not delay the courtesy tone noticeably.
+4. **Hang Time**: 4-10 seconds is common. Longer times give more opportunity for break-in but keep the repeater transmitting longer.
+5. **Time-out Timer**: 3-5 minutes (180 - 360 seconds) is standard. Adjust based on your community's typical conversation patterns.
+6. **Calm-Down Timer**: It depends on community's behaviour. Usually a value between 3-10 seconds will do the job.
+7. **RSSI Settings**: Measure the RSSI of the receiver, with antenna connected, a not-used frequency near input frequency. Observe the RSSI and write it down. This is the baseline, the "noise floor". Set **RSSI Low Threshold** a little bit above the noted value. Then get the RSSI value for a signal that is intelligible. Set a value a little bit above this as **RSSI High Threshold**. Start with conservative values and adjust based on real-world performance and noise conditions.
 
 ## Troubleshooting Common Issues
 
 | Issue | Possible Cause | Solution |
 |-------|---------------|----------|
-| Repeater doesn't activate | RSSI threshold too high or incorrect carrier detect polarity | Lower RSSI threshold or change polarity setting |
+| Repeater doesn't activate | RSSI threshold too high or incorrect Carrier detect polarity in Logic Mode | Lower RSSI threshold or change polarity setting |
 | Repeater cuts out during transmission | Hold Time or Fragmentation Time too short | Increase these values to bridge normal signal variations |
 | Courtesy tone plays too early | Fragmentation Time too short | Increase Fragmentation Time |
 | Repeater stays on too long | Hang Time too long | Decrease Hang Time |
