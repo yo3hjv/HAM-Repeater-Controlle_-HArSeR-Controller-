@@ -112,7 +112,8 @@ The ESP32 Repeater Controller uses two types of web pages:
 - You must use a I2C LCD to pass POST (Power On Self Test)
 - If you can't connect to the ESP32 after flashing, try resetting it
 - If web pages don't load properly, ensure all files were uploaded to SPIFFS
-- Check the serial monitor (115200 baud) for debugging information (http://repeater.local/debug)
+- If some informations doesn't update, check if **Port#81** is open in your network environment
+- Check the serial monitor (115200 baud) for debugging information after proper selection for debugging options (http://repeater.local/debug)
 
 ## Next Steps
 
