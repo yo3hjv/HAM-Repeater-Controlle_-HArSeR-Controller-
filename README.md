@@ -1,4 +1,4 @@
-# HAM Smart Repeater Controller
+# HAMRADIO Smart Repeater Controller (HaRSeR Controller)
 
 ## Overview
 
