@@ -1,4 +1,5 @@
 ### Beacon timer resetting only on automatic transmission not on manual send!
+## For Pre release candidate R.2.0.0.
 
 
 ## THE COMPLETE SIGNAL FLOW - SIGNAL DETECTION AND REPEATER OPERATION SEQUENCE
