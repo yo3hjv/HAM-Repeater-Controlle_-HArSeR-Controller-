@@ -1,4 +1,5 @@
 # HAMRADIO Smart Repeater Controller (HaRSeR Controller)
+# Latest version: Pre-release 2_0_4
 
 ## Overview
 
