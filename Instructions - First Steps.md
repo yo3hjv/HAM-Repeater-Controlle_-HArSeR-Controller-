@@ -1,4 +1,4 @@
-# ESP32 Repeater Controller - First Steps Guide
+# HArSeR Repeater Controller - First Steps Guide
 
 This guide will help you get started with your ESP32 Repeater Controller after flashing the firmware.
 
