@@ -22,6 +22,8 @@ This document explains how each setting in the ESP32 Repeater Controller web int
 
 ## RSSI Hysteresis
 
+**IMPORTANT: "RSSI High Threshold" value MUST be greater than "RSSI Low Threshold" in order for RSSI value Hiseresys to properly work!**
+
 | Setting | Description | Effect on Repeater |
 |---------|-------------|-------------------|
 | RSSI High Threshold | Sets the RSSI level to trigger reception | Higher values require stronger signals to activate the repeater, reducing sensitivity but improving noise rejection. |
