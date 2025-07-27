@@ -1,6 +1,10 @@
--1 - Batch files upload into SPIFFS.
--2 - Fully implement language files definitions
--3 - LCD >>> Icons for various operating states.
+# HArSeR Repeater Controller - ToDoNext
+
+
+
+    1 - Batch files upload into SPIFFS.
+    2 - Fully implement language files definitions
+    3 - LCD >>> Icons for various operating states.
 
 
 
